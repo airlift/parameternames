@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.airlift</groupId>
         <artifactId>airbase</artifactId>
-        <version>38</version>
+        <version>62</version>
     </parent>
 
     <artifactId>parameternames</artifactId>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>5.0.2</version>
+            <version>5.0.4</version>
         </dependency>
 
         <!-- for testing -->
@@ -62,7 +62,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
+                <version>2.4.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -74,12 +74,11 @@
                             <shadeSourcesContent>true</shadeSourcesContent>
                             <dependencyReducedPomLocation>${project.build.directory}/pom.xml</dependencyReducedPomLocation>
                             <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
-                            <!-- todo: enable minimizeJar when shade is updated to support Java 8 bytecode -->
-                            <!--<minimizeJar>true</minimizeJar>-->
+                            <minimizeJar>true</minimizeJar>
                             <relocations>
                                 <relocation>
-                                    <pattern>org.ow2.asm</pattern>
-                                    <shadedPattern>${shadeBase}.org.ow2.asm</shadedPattern>
+                                    <pattern>org.objectweb.asm</pattern>
+                                    <shadedPattern>${shadeBase}.asm</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>

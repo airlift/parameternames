@@ -29,6 +29,7 @@ import java.lang.reflect.Executable;
 import java.lang.reflect.Parameter;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,7 +85,7 @@ public final class ParameterNames
 
     /**
      * Gets the parameter names of the method or constructor from the debug symbols in the bytecode.
-     * Note that, abstract methods and interface methods do not have bytecode, and therefore, there are
+     * Note that, abstract methods and interface methods do not have bytecode, and therefore, there have
      * no debug symbols to read.
      *
      * @param executable the method or constructor
@@ -151,20 +152,20 @@ public final class ParameterNames
         private final ParameterNameMethodVisitor methodVisitor;
         private boolean methodFound;
 
-        public ParameterNameClassVisitor(Executable executable)
+        ParameterNameClassVisitor(Executable executable)
         {
             super(Opcodes.ASM5);
 
             methodName = executable instanceof Constructor ? "<init>" : executable.getName();
 
-            parameterTypes = asList(executable.getParameterTypes()).stream()
+            parameterTypes = Arrays.stream(executable.getParameterTypes())
                     .map(Type::getType)
                     .collect(toList());
 
             this.methodVisitor = new ParameterNameMethodVisitor(isStatic(executable.getModifiers()), parameterTypes);
         }
 
-        public Optional<List<String>> getParameterNames()
+        Optional<List<String>> getParameterNames()
         {
             return methodVisitor.getResult();
         }
@@ -193,7 +194,7 @@ public final class ParameterNames
         private final List<Type> parameterTypes;
         private final String[] slotNames;
 
-        public ParameterNameMethodVisitor(boolean isStatic, List<Type> parameterTypes)
+        ParameterNameMethodVisitor(boolean isStatic, List<Type> parameterTypes)
         {
             super(Opcodes.ASM5);
             this.isStatic = isStatic;
@@ -217,7 +218,7 @@ public final class ParameterNames
             }
         }
 
-        public Optional<List<String>> getResult()
+        Optional<List<String>> getResult()
         {
             int slot = 0;
             if (!isStatic) {

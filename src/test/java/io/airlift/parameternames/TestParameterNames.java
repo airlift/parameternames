@@ -17,7 +17,9 @@ import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static io.airlift.parameternames.ParameterNames.getParameterNames;
 import static io.airlift.parameternames.ParameterNames.getParameterNamesFromBytecode;
@@ -121,15 +123,18 @@ public class TestParameterNames
 
     private static void assertParameters(boolean hasByteCode, Method method, String... expectedParameterNames)
     {
-        assertTrue(asList(method.getParameters()).stream().allMatch(Parameter::isNamePresent),
+        assertTrue(
+                Arrays.stream(method.getParameters()).allMatch(Parameter::isNamePresent),
                 "This code must be compiled with the '-parameters' option to javac");
         assertEquals(getParameterNames(method), asList(expectedParameterNames));
         if (hasByteCode) {
-            assertEquals(getParameterNamesFromBytecode(method).get(), asList(expectedParameterNames));
+            Optional<List<String>> parameterNamesFromBytecode = getParameterNamesFromBytecode(method);
+            assertTrue(parameterNamesFromBytecode.isPresent());
+            assertEquals(parameterNamesFromBytecode.get(), asList(expectedParameterNames));
         }
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public abstract static class TestMethods
     {
         public void method()
