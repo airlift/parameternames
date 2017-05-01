@@ -1,4 +1,6 @@
 # Parameter Names
+[![Maven Central](https://img.shields.io/maven-central/v/io.airlift/parameternames.svg?label=Maven%20Central)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.airlift%22%20AND%20a%3A%22parameternames%22)
+[![Build Status](https://travis-ci.org/airlift/parameternames.svg?branch=master)](https://travis-ci.org/airlift/parameternames)
 
 Parameter Names contains utility methods for fetching the parameter names for a
 method or constructor.
