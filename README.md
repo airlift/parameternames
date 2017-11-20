@@ -10,6 +10,8 @@ constructor, but this only works if the code was compiled with the Java 8
 version of `javac` with the `-parameters` option enabled.  This utility
 falls back to reading parameters from the debug symbols in the method
 bytecode for classes compiled without the `-parameters` option enabled.
+Note that this fallback will not work for interfaces, as interface methods
+do not have bytecode and thus do not have debug symbols.
 
 ## Usage
 
