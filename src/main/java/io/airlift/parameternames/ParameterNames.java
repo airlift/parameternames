@@ -119,7 +119,7 @@ public final class ParameterNames
     private static byte[] loadBytecode(Class<?> declaringClass)
     {
         try {
-            ClassLoader classLoader = declaringClass.getClass().getClassLoader();
+            ClassLoader classLoader = declaringClass.getClassLoader();
             if (classLoader == null) {
                 classLoader = ClassLoader.getSystemClassLoader();
                 if (classLoader == null) {
