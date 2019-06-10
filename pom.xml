@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>parameternames</artifactId>
-    <version>1.4</version>
+    <version>1.5-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <description>Utility methods for fetching the parameter names for a method or constructor</description>
@@ -18,7 +18,7 @@
     <scm>
         <connection>scm:git:git://github.com/airlift/parameternames.git</connection>
         <url>https://github.com/airlift/parameternames</url>
-        <tag>1.4</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <inceptionYear>2015</inceptionYear>
