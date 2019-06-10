@@ -50,6 +50,31 @@ public final class ParameterNames
     private ParameterNames() { }
 
     /**
+     * Tries to get meaningful parameter names of the method or constructor.  If the parameters were
+     * compiled into the class file using the {@code -parameters} flag to {@code javac}, the parameters
+     * are fetch via Java reflection.  Otherwise, the parameters are read from the debug symbols in the class
+     * file.  If the method does not have debug symbols, empty result is returned.
+     *
+     * @param executable the method or constructor
+     * @return the parameter names
+     */
+    public static Optional<List<String>> tryGetParameterNames(Executable executable)
+    {
+        requireNonNull(executable, "executable is null");
+
+        if (executable.getParameterCount() == 0) {
+            return Optional.of(emptyList());
+        }
+
+        List<Parameter> parameters = asList(executable.getParameters());
+        if (parameters.stream().allMatch(Parameter::isNamePresent)) {
+            return Optional.of(getParameterNames(parameters));
+        }
+
+        return getParameterNamesFromBytecode(executable);
+    }
+
+    /**
      * Gets the parameter names of the method or constructor.  If the parameters were compiled into
      * the class file using the {@code -parameters} flag to {@code javac}, the parameters are fetch
      * via Java reflection.  Otherwise, the parameters are read from the debug symbols in the class
@@ -77,6 +102,11 @@ public final class ParameterNames
             }
         }
 
+        return getParameterNames(parameters);
+    }
+
+    private static List<String> getParameterNames(List<Parameter> parameters)
+    {
         // Parameter.getName() returns argN if the parameter names were not compiled into the class file
         return unmodifiableList(parameters.stream()
                 .map(Parameter::getName)
