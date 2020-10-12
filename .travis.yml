@@ -3,8 +3,8 @@ language: java
 sudo: required
 
 jdk:
-  - oraclejdk8
-  - oraclejdk9
+  - openjdk11
+  - openjdk15
 
 cache:
   directories:
