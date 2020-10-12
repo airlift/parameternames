@@ -184,7 +184,7 @@ public final class ParameterNames
 
         ParameterNameClassVisitor(Executable executable)
         {
-            super(Opcodes.ASM5);
+            super(Opcodes.ASM9);
 
             methodName = executable instanceof Constructor ? "<init>" : executable.getName();
 
